@@ -1,38 +1,39 @@
 import React, { Component } from 'react';
 
 
-class App extends React.Component {
+class App extends Component {
     render() {
         return (
             <div className="notificationsFrame">
                 <div className="panel">
                     <Header title="TIMELINE"/>
-                    <Content activities={activities} />
+                    <Content activities= {[
+                            {
+                                timestamp: new Date().getTime(),
+                                text: "Ate lunch",
+                                user: {
+                                    id: 1, name: 'Nate',
+                                    avatar: "http://www.croop.cl/UI/twitter/images/doug.jpg"
+                                },
+                                comments: [{ from: 'Ari', text: 'Me too!' }]
+                            },
+                            {
+                                timestamp: new Date().getTime(),
+                                text: "Woke up early for a beautiful run",
+                                user: {
+                                    id: 2, name: 'Ari',
+                                    avatar: "http://www.croop.cl/UI/twitter/images/doug.jpg"
+                                },
+                                comments: [{ from: 'Nate', text: 'I am so jealous' }]
+                            },
+                        ]}/>
                 </div>
             </div>
         )
     }
 }
 
-
-class Content extends React.Component {
-    render() {
-      //const activity = this.props.activity; does the same as the line below
-        const {activities} = this.props;
-
-        return (
-            <div className="content">
-                <div className="line"></div>
-                {/* Timeline item */}
-                {activities.map( (activity) => (
-                    <ActiviityItem activity={activity} />
-                    ))}
-            </div>
-        )
-    }
-}
-
-class Header extends React.Component {
+class Header extends Component {
     render() {
         return (
             <div className="header">
@@ -48,13 +49,31 @@ class Header extends React.Component {
     }
 }
 
-class ActivityItem extends React.Component {
+
+class Content extends Component {
+    render() {
+        const {activities} = this.props;
+
+        return (
+            <div className="content">
+                <div className="line"></div>
+                {/* Timeline item */}
+                {activities.map((activity) => (
+                    <ActivityItem activity={activity} />
+                ))}
+            </div>
+        )
+    }
+}
+
+
+class ActivityItem extends Component {
     render() {
         const {activity} = this.props; // ES6 destructuring
         return (
             <div className="item">
                 <div className="avatar">
-                    <img src={activity.user.avatar} />
+                    <img src={activity.user.avatar} alt=""/>
                     {activity.user.name}
                 </div>
                 <span className="time">
